@@ -1,0 +1,95 @@
+def dfs(node, adj_list, visited, edgeTo, distance):
+    """
+    Depth First Search (DFS) algorithm implemented using adjacency list representation.
+
+    Parameters:
+    - node: The current node being visited.
+    - adj_list: The adjacency list representing the graph.
+    - visited: A boolean list to keep track of visited nodes.
+
+    Returns:
+    None (but the visited list is updated).
+    """
+    # Mark the current node as visited
+    visited[node] = True
+    
+    # Visit all adjacent nodes that have not been visited
+    for neighbor in adj_list[node]:
+        if not visited[neighbor]:
+            edgeTo[neighbor] = node
+            distance[neighbor] = distance[node] + 1
+
+            dfs(neighbor, adj_list, visited, edgeTo, distance)
+
+# Example usage:
+adj_list = {
+    0: [1, 7],
+    1: [0],
+    2: [6,3],
+    3: [2,5],
+    4: [5, 3],
+    5: [3,4,6],
+    6: [2,5,7],
+    7: [6,0],
+}
+num_nodes = len(adj_list)
+visited = [False] * num_nodes
+edgeTo = [None] * num_nodes
+distance = [0] * num_nodes
+start = 0 
+# Start DFS from node 0
+dfs(start, adj_list, visited, edgeTo, distance)
+
+# After DFS, 'visited' will indicate which nodes are reachable from node 0
+print("Nodes reachable from node 0:", visited)
+print("lastedge", edgeTo)
+print("distances", distance)
+furthestNode = distance.index(max(distance))
+print(furthestNode)
+nodesToAvoid = set()
+currNode = furthestNode
+while currNode != start:
+    currNode = edgeTo[currNode]
+
+    nodesToAvoid.add(currNode)
+    
+
+print(nodesToAvoid)
+
+def dfs(node, adj_list, visited, edgeTo, distance, nodesToAvoid):
+    """
+    Depth First Search (DFS) algorithm implemented using adjacency list representation.
+
+    Parameters:
+    - node: The current node being visited.
+    - adj_list: The adjacency list representing the graph.
+    - visited: A boolean list to keep track of visited nodes.
+
+    Returns:
+    None (but the visited list is updated).
+    """
+    # Mark the current node as visited
+    visited[node] = True
+    
+    
+    # Visit all adjacent nodes that have not been visited
+    for neighbor in adj_list[node]:
+
+
+        if not visited[neighbor] and neighbor not in nodesToAvoid:
+            edgeTo[neighbor] = node
+            distance[neighbor] = distance[node] + 1
+
+            dfs(neighbor, adj_list, visited, edgeTo, distance, nodesToAvoid)
+
+
+visited = [False] * num_nodes
+edgeTo = [None] * num_nodes
+distance = [0] * num_nodes
+
+dfs(furthestNode, adj_list, visited, edgeTo, distance, nodesToAvoid)
+
+print("Nodes reachable from node 0:", visited)
+print("lastedge", edgeTo)
+print("distances", distance)
+furthestNode = distance.index(max(distance))

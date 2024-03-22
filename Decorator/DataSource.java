@@ -1,3 +1,4 @@
+package Decorator;
 import java.io.File;
 
 public interface DataSource {
